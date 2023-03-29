@@ -1,0 +1,8 @@
+[build]
+target = "avr-atmega32u4.json"
+
+[target.'cfg(target_arch = "avr")']
+runner = "avrdude -c avr109 -b 57600 -p m32u4 -P /dev/ttyACM0 -Uflash:w:target/avr-atmega32u4/release/kaleidoscope.elf:e"
+
+[unstable]
+build-std = ["core"]

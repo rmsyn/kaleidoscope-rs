@@ -1,0 +1,59 @@
+[package]
+name = "kaleidoscope"
+version = "0.1.0"
+authors = ["rmsyn <rmsynchls@gmail.com>"]
+edition = "2021"
+publish = false
+
+[profile.dev]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[dependencies]
+avr-progmem = "0.3"
+bitfield = "0.14"
+panic-halt = "0.2.0"
+ufmt = "0.1.0"
+nb = "0.1.2"
+embedded-hal = "0.2.3"
+paste = "1.0"
+
+[dependencies.lock_api]
+version = "0.4"
+
+[dependencies.avr-device]
+version = "0.5"
+features = ["atmega32u4"]
+
+[dependencies.arduino-hal]
+version = "0.1"
+git = "https://github.com/Rahix/avr-hal"
+package = "arduino-hal"
+
+[dependencies.atmega-hal]
+version = "0.1"
+git = "https://github.com/Rahix/avr-hal"
+package = "atmega-hal"
+
+[dependencies.keyboardio-hid]
+git = "https://github.com/rmsyn/keyboardio-hid-rs"
+branch = "main"
+features = ["international"]
+
+[dependencies.kaleidoscope-internal]
+#git = "https://github.com/rmsyn/kaleidoscope-internal"
+path = "../kaleidoscope-internal"
+
+[features]
+default = ["atreus"]
+avr = ["kaleidoscope-internal/avr"]
+atmega32u4 = ["arduino-hal/arduino-leonardo", "avr-device/atmega32u4", "atmega-hal/atmega32u4", "kaleidoscope-internal/atmega32u4"]
+atreus = ["atmega32u4", "avr", "kaleidoscope-internal/atreus"]
